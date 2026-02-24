@@ -42,8 +42,16 @@ class Application:
                                     print("Le nom de l'auteur doit être composé uniquement de lettres. Veuillez réessayer.")
                                 else:
                                     break
+                            
+                            while True:
+                                type_doc = input("Type de document : ").strip().replace(" ", "")
 
-                            doc = Livre(titre, auteur)
+                                if not type_doc.isalpha():
+                                    print("Le type de document doit être composé uniquement de lettres. Veuillez réessayer.")
+                                else:
+                                    break
+
+                            doc = Livre(titre, type_doc, auteur)
 
                             self.bibliothecaire.ajouter_document(doc)
                             print("Livre ajouté avec succès.")
@@ -68,8 +76,16 @@ class Application:
                                     print("Le numéro doit être composé uniquement de chiffres. Veuillez réessayer.")
                                 else:
                                     break
+                            
+                            while True:
+                                type_doc = input("Type de document : ").strip().replace(" ", "")
 
-                            doc = Magazine(titre, numero)
+                                if not type_doc.isalpha():
+                                    print("Le type de document doit être composé uniquement de lettres. Veuillez réessayer.")
+                                else:
+                                    break
+
+                            doc = Magazine(titre, type_doc, numero)
 
                             self.bibliothecaire.ajouter_document(doc)
                             print("Magazine ajouté avec succès.")

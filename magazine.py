@@ -2,8 +2,8 @@ from document import Document
 
 class Magazine(Document):
     """Classe représentant un magazine, héritant de Document."""
-    def __init__(self, titre, numero):
-        super().__init__(titre)
+    def __init__(self, titre, type_doc, numero):
+        super().__init__(titre, type_doc)
         self._numero = numero
 
     @property

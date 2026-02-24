@@ -2,8 +2,8 @@ from document import Document
 
 class Livre(Document):
     """Classe représentant un livre, héritant de Document."""
-    def __init__(self, titre, auteur):
-        super().__init__(titre)
+    def __init__(self, titre, type_doc, auteur):
+        super().__init__(titre, type_doc)
         self._auteur = auteur
 
     @property

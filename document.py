@@ -3,13 +3,18 @@ from abc import ABC, abstractmethod
 class Document(ABC):
     """Classe abstraite représentant un document de la bibliothèque."""
 
-    def __init__(self, titre):
+    def __init__(self, titre, type_doc):
         self._titre = titre
+        self._type_doc = type_doc
         self.__disponible = True #(name mangling)
 
     @property
     def titre(self):
         return self._titre
+
+    @property
+    def type_doc(self):
+        return self._type_doc
 
     @property
     def disponible(self):
