@@ -1,4 +1,4 @@
-# 📚 Système de Gestion de Médiathèque (POO Python)
+# 📚 Système de Gestion de Bibliotheque (POO Python)
 
 ## Description
 
