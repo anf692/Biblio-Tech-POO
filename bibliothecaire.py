@@ -4,13 +4,14 @@ from db import connection_db
 from datetime import datetime
 
 
+
 class Bibliothecaire:
     """Classe représentant un bibliothécaire qui gère les opérations de la bibliothèque."""
 
     def ajouter_document(self, document):
         """Ajoute un nouveau document (livre ou magazine) à la bibliothèque."""
 
-        conn = connection_db()
+        conn=connection_db()
         cursor = conn.cursor()
 
         # insertion dans documents
@@ -42,7 +43,7 @@ class Bibliothecaire:
 
     def inscrire_membre(self, nom):
         """Inscrit un nouveau membre à la bibliothèque."""
-        conn = connection_db()
+        conn=connection_db()
         cursor = conn.cursor()
 
         cursor.execute("INSERT INTO membres (nom) VALUES (%s)", (nom,))
@@ -55,7 +56,7 @@ class Bibliothecaire:
     def trouver_document(self, titre):
         """Recherche un document par son titre et le retourne sous forme d'objet Livre ou Magazine."""
 
-        conn = connection_db()
+        conn=connection_db()
         cursor = conn.cursor(dictionary=True)
 
         cursor.execute("SELECT * FROM documents WHERE titre=%s or id=%s", (titre, titre))
@@ -98,8 +99,7 @@ class Bibliothecaire:
 
     def emprunter_document(self, titre, nom):
         """Permet à un membre d'emprunter un document s'il est disponible."""
-
-        conn = connection_db()
+        conn=connection_db()
         cursor = conn.cursor(dictionary=True)
 
         # récupérer document
@@ -144,8 +144,7 @@ class Bibliothecaire:
     
     def retourner_document(self, titre, nom):
         """Permet à un membre de retourner un document emprunté."""
-
-        conn = connection_db()
+        conn=connection_db()
         cursor = conn.cursor(dictionary=True)
 
         cursor.execute("SELECT * FROM documents WHERE titre=%s", (titre,))
@@ -194,28 +193,34 @@ class Bibliothecaire:
 
     def afficher_catalogue(self):
         """Affiche tous les documents de la bibliothèque avec leur statut de disponibilité."""
-
-        conn = connection_db()
+        conn=connection_db()
         cursor = conn.cursor(dictionary=True)
-
-        cursor.execute("SELECT * FROM documents")
-        docs = cursor.fetchall()
 
         catalogue = []
 
-        for doc in docs:
-            if doc["type_doc"] == "livre":
-                cursor.execute("SELECT auteur FROM livres WHERE document_id=%s", (doc["id"],))
-                auteur = cursor.fetchone()["auteur"]
-                document = Livre(doc["titre"], doc["type_doc"], auteur)
+        cursor.execute("""
+            SELECT d.id, d.titre, d.disponible, l.auteur
+            FROM documents d
+            JOIN livres l ON d.id = l.document_id
+            WHERE d.type_doc = 'livre'
+        """)
+        livres = cursor.fetchall()
 
-            else:
-                cursor.execute("SELECT numero FROM magazines WHERE document_id=%s", (doc["id"],))
-                numero = cursor.fetchone()["numero"]
-                document = Magazine(doc["titre"], doc["type_doc"], numero)
+        for doc in livres:
+            document = Livre(doc["titre"],doc["auteur"],doc["disponible"],doc["id"])
+            catalogue.append(document)
 
-            if not doc["disponible"]:
-                document._changer_disponibilite(False)
+       
+        cursor.execute("""
+            SELECT d.id, d.titre, d.disponible, m.numero
+            FROM documents d
+            JOIN magazines m ON d.id = m.document_id
+            WHERE d.type_doc = 'magazine'
+        """)
+        magazines = cursor.fetchall()
+
+        for doc in magazines:
+            document = Magazine(doc["titre"],doc["numero"], doc["disponible"],doc["id"])
 
             catalogue.append(document)
 
@@ -227,8 +232,7 @@ class Bibliothecaire:
 
     def afficher_membres(self):
         """Affiche tous les membres inscrits à la bibliothèque."""
-
-        conn = connection_db()
+        conn=connection_db()
         cursor = conn.cursor(dictionary=True)
 
         cursor.execute("SELECT * FROM membres")
@@ -271,8 +275,7 @@ class Bibliothecaire:
         
     def afficher_emprunts_membre(self, nom):
         """Affiche tous les documents empruntés par un membre donné."""
-
-        conn = connection_db()
+        conn=connection_db()
         cursor = conn.cursor(dictionary=True)
 
         cursor.execute("SELECT * FROM membres WHERE nom=%s", (nom,))

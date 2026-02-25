@@ -67,7 +67,7 @@ class Application:
 
                             while True:
                                 numero = input("Numéro : ").strip().replace(" ", "")
-                                if not numero.isdigit():
+                                if not numero.isnumeric():
                                     print("Le numéro doit être composé uniquement de chiffres. Veuillez réessayer.")
                                 else:
                                     break

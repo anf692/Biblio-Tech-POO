@@ -5,7 +5,7 @@ class Livre(Document):
     """Classe représentant un livre."""
 
     def __init__(self, titre, auteur, disponible=True, doc_id=None):
-        super().__init__(titre, "livre", disponible, doc_id)
+        super().__init__(titre, "livre",disponible, doc_id)
         self._auteur = auteur
 
     @property
