@@ -1,23 +1,25 @@
 from document import Document
 
+
 class Magazine(Document):
-    """Classe représentant un magazine, héritant de Document."""
-    def __init__(self, titre, type_doc, numero):
-        super().__init__(titre, type_doc)
+    """Classe représentant un magazine."""
+
+    def __init__(self, titre, numero, disponible=True, doc_id=None):
+        super().__init__(titre, "magazine", disponible, doc_id)
         self._numero = numero
 
     @property
     def numero(self):
-        """Retourne le numéro du magazine."""
         return self._numero
 
     def emprunter(self):
-        """methode d'emprunter le magazine si disponible."""
         if not self.disponible:
             raise Exception("Magazine déjà indisponible.")
         self._changer_disponibilite(False)
 
-
     def retourner(self):
-        """methode de retourner le magazine."""
         self._changer_disponibilite(True)
+
+    def __str__(self):
+        statut = "Disponible" if self.disponible else "Indisponible"
+        return f"Magazine: {self.titre} | Numéro: {self.numero} | {statut}"

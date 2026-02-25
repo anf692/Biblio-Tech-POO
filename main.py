@@ -2,7 +2,6 @@ from bibliothecaire import Bibliothecaire
 from livre import Livre
 from magazine import Magazine
 
-#programme principal
 class Application:
     def __init__(self):
         self.bibliothecaire = Bibliothecaire()
@@ -27,32 +26,10 @@ class Application:
 
                     case "1":
                         try:
-                            while True:
-                                titre = input("Titre : ").strip().replace(" ", "")
+                            titre = input("Titre : ").strip()
+                            auteur = input("Auteur : ").strip()
 
-                                if not titre.isalpha():
-                                    print("Le titre doit être composé uniquement de lettres. Veuillez réessayer.")
-                                else:
-                                    break
-                                
-                            while True:
-                                auteur = input("Auteur : ").strip().replace(" ", "")
-
-                                if not auteur.isalpha() :
-                                    print("Le nom de l'auteur doit être composé uniquement de lettres. Veuillez réessayer.")
-                                else:
-                                    break
-                            
-                            while True:
-                                type_doc = input("Type de document : ").strip().replace(" ", "")
-
-                                if not type_doc.isalpha():
-                                    print("Le type de document doit être composé uniquement de lettres. Veuillez réessayer.")
-                                else:
-                                    break
-
-                            doc = Livre(titre, type_doc, auteur)
-
+                            doc = Livre(titre, auteur)
                             self.bibliothecaire.ajouter_document(doc)
                             print("Livre ajouté avec succès.")
 
@@ -61,32 +38,10 @@ class Application:
 
                     case "2":
                         try:
-                            while True:
-                                titre = input("Titre : ").strip().replace(" ", "")
+                            titre = input("Titre : ").strip()
+                            numero = input("Numéro : ").strip()
 
-                                if not titre.isalpha():
-                                    print("Le titre doit être composé uniquement de lettres. Veuillez réessayer.")
-                                else:
-                                    break
-                                
-                            while True:
-                                numero = input("Numéro : ").strip()
-
-                                if not numero.isdigit():
-                                    print("Le numéro doit être composé uniquement de chiffres. Veuillez réessayer.")
-                                else:
-                                    break
-                            
-                            while True:
-                                type_doc = input("Type de document : ").strip().replace(" ", "")
-
-                                if not type_doc.isalpha():
-                                    print("Le type de document doit être composé uniquement de lettres. Veuillez réessayer.")
-                                else:
-                                    break
-
-                            doc = Magazine(titre, type_doc, numero)
-
+                            doc = Magazine(titre, numero)
                             self.bibliothecaire.ajouter_document(doc)
                             print("Magazine ajouté avec succès.")
 
@@ -95,14 +50,7 @@ class Application:
 
                     case "3":
                         try:
-                            while True:
-                                nom = input("Nom du membre : ").strip().replace(" ", "") 
-
-                                if not nom.isalpha():
-                                    print("Le nom du membre doit être composé uniquement de lettres. Veuillez réessayer.")
-                                else:
-                                    break
-
+                            nom = input("Nom du membre : ").strip()
                             self.bibliothecaire.inscrire_membre(nom)
                             print("Membre inscrit avec succès.")
                         except Exception as e:
@@ -110,104 +58,61 @@ class Application:
 
                     case "4":
                         try:
-                            while True:
-                                titre = input("Titre : ").strip().replace(" ", "")
-
-                                if not titre.isalpha():
-                                    print("Le titre doit être composé uniquement de lettres. Veuillez réessayer.")
-                                else:
-                                    break
-                            while True:
-                                nom = input("Nom membre : ").strip().replace(" ", "")
-                                if not nom.isalpha():
-                                    print("Le nom du membre doit être composé uniquement de lettres. Veuillez réessayer.")
-                                else:
-                                    break
-
+                            titre = input("Titre : ").strip()
+                            nom = input("Nom membre : ").strip()
                             self.bibliothecaire.emprunter_document(titre, nom)
                             print("Emprunt validé.")
-
                         except Exception as e:
                             print("Erreur lors de l'emprunt :", e)
 
                     case "5":
                         try:
-                            while True:
-                                titre = input("Titre : ").strip().replace(" ", "")
-
-                                if not titre.isalpha():
-                                    print("Le titre doit être composé uniquement de lettres. Veuillez réessayer.")
-                                else:
-                                    break
-                            while True:
-                                nom = input("Nom membre : ").strip().replace(" ", "")
-                                if not nom.isalpha():
-                                    print("Le nom du membre doit être composé uniquement de lettres. Veuillez réessayer.")
-                                else:
-                                    break
-
+                            titre = input("Titre : ").strip()
+                            nom = input("Nom membre : ").strip()
                             self.bibliothecaire.retourner_document(titre, nom)
                             print("Retour validé.")
-                            
                         except Exception as e:
                             print("Erreur lors du retour :", e)
 
                     case "6":
                         catalogue = self.bibliothecaire.afficher_catalogue()
-
                         if not catalogue:
-                            raise Exception("Catalogue vide.")
-
-                        # Affiche chaque document avec son statut de disponibilité
-                        for doc in catalogue:
-                            statut = "Disponible" if doc.disponible else "Indisponible"
-                            print("-", doc.titre, "|", statut)
+                            print("Catalogue vide.")
+                        else:
+                            for doc in catalogue:
+                                print(doc)
 
                     case "7":
                         try:
-                            while True:
-                                nom = input("Nom membre : ").strip().replace(" ", "")
-                                if not nom.isalpha():
-                                    print("Le nom du membre doit être composé uniquement de lettres. Veuillez réessayer.")
-                                else:
-                                    break
-                        
-
-                            membres = self.bibliothecaire.afficher_membres()
-
-                            # Vérifie que le membre existe et qu'il a des emprunts
-                            if nom not in membres:
-                                raise Exception("Membre introuvable.")
-
-                            # Vérifie que le membre a des emprunts
-                            if not membres[nom]:
-                                raise Exception("Aucun emprunt.")
-
-                            # Affiche les titres des documents empruntés par le membre
-                            for doc in membres[nom]:
-                                print("-", doc.titre)
-
+                            nom = input("Nom membre : ").strip()
+                            emprunts = self.bibliothecaire.afficher_emprunts_membre(nom)
+                            if not emprunts:
+                                print("Aucun emprunt pour ce membre.")
+                            else:
+                                for doc in emprunts:
+                                    print(doc)
                         except Exception as e:
                             print("Erreur :", e)
 
                     case "8":
-                        print("\n--- TEST VERROUILLAGE ---")
-                        livre = Livre("Test", "Auteur")
-
+                        # Démonstration verrouillage
+                        livre = Livre("TestVerrou", "AuteurTest")
                         print("Disponible :", livre.disponible)
                         print("Tentative modification sauvage...")
-                        livre.disponible = False  # doit échouer
+                        try:
+                            livre.disponible = False  # doit échouer
+                        except AttributeError as e:
+                            print("Impossible de modifier directement:", e)
 
                     case "9":
                         print("Au revoir")
                         break
 
                     case _:
-                        raise Exception("Choix invalide.")
+                        print("Choix invalide.")
 
             except Exception as e:
                 print("Erreur :", e)
-
 
 
 app = Application()
