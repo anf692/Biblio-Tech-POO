@@ -1,14 +1,14 @@
 from document import Document
 from livre import Livre
 from magazine import Magazine
-from db import get_connection
+from db import connection_db
 from datetime import datetime
 
 
 class Bibliothecaire:
 
     def ajouter_document(self, document):
-        conn = get_connection()
+        conn = connection_db()
         cursor = conn.cursor()
 
         # insertion dans documents
@@ -40,7 +40,7 @@ class Bibliothecaire:
 
     def inscrire_membre(self, nom):
         """Inscrit un nouveau membre à la bibliothèque."""
-        conn = get_connection()
+        conn = connection_db()
         cursor = conn.cursor()
 
         cursor.execute("INSERT INTO membres (nom) VALUES (%s)", (nom,))
@@ -53,7 +53,7 @@ class Bibliothecaire:
     def trouver_document(self, titre):
         """Recherche un document par son titre et le retourne sous forme d'objet Livre ou Magazine."""
 
-        conn = get_connection()
+        conn = connection_db()
         cursor = conn.cursor(dictionary=True)
 
         cursor.execute("SELECT * FROM documents WHERE titre=%s", (titre,))
@@ -97,7 +97,7 @@ class Bibliothecaire:
     def emprunter_document(self, titre, nom):
         """Permet à un membre d'emprunter un document s'il est disponible."""
 
-        conn = get_connection()
+        conn = connection_db()
         cursor = conn.cursor(dictionary=True)
 
         # récupérer document
@@ -143,7 +143,7 @@ class Bibliothecaire:
     def retourner_document(self, titre, nom):
         """Permet à un membre de retourner un document emprunté."""
 
-        conn = get_connection()
+        conn = connection_db()
         cursor = conn.cursor(dictionary=True)
 
         cursor.execute("SELECT * FROM documents WHERE titre=%s", (titre,))
@@ -193,7 +193,7 @@ class Bibliothecaire:
     def afficher_catalogue(self):
         """Affiche tous les documents de la bibliothèque avec leur statut de disponibilité."""
 
-        conn = get_connection()
+        conn = connection_db()
         cursor = conn.cursor(dictionary=True)
 
         cursor.execute("SELECT * FROM documents")
@@ -226,7 +226,7 @@ class Bibliothecaire:
     def afficher_membres(self):
         """Affiche tous les membres inscrits à la bibliothèque."""
 
-        conn = get_connection()
+        conn = connection_db()
         cursor = conn.cursor(dictionary=True)
 
         cursor.execute("SELECT * FROM membres")
@@ -270,7 +270,7 @@ class Bibliothecaire:
     def afficher_emprunts_membre(self, nom):
         """Affiche tous les documents empruntés par un membre donné."""
 
-        conn = get_connection()
+        conn = connection_db()
         cursor = conn.cursor(dictionary=True)
 
         cursor.execute("SELECT * FROM membres WHERE nom=%s", (nom,))

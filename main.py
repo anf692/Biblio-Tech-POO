@@ -15,9 +15,10 @@ class Application:
             print("4. Emprunter un document")
             print("5. Retourner un document")
             print("6. Afficher le catalogue")
-            print("7. Lister les emprunts d'un membre")
-            print("8. Démonstration verrouillage")
-            print("9. Quitter")
+            print("7. Afficher les membres")
+            print("8. Lister les emprunts d'un membre")
+            print("9. Démonstration verrouillage")
+            print("10. Quitter")
 
             choix = input("Votre choix : ")
 
@@ -83,6 +84,14 @@ class Application:
                                 print(doc)
 
                     case "7":
+                        membres = self.bibliothecaire.afficher_membres()
+                        if not membres:
+                            print("Aucun membre inscrit.")
+                        else:
+                            for membre in membres:
+                                print('- ' + membre)
+
+                    case "8":
                         try:
                             nom = input("Nom membre : ").strip()
                             emprunts = self.bibliothecaire.afficher_emprunts_membre(nom)
@@ -94,7 +103,7 @@ class Application:
                         except Exception as e:
                             print("Erreur :", e)
 
-                    case "8":
+                    case "9":
                         # Démonstration verrouillage
                         livre = Livre("TestVerrou", "AuteurTest")
                         print("Disponible :", livre.disponible)
@@ -104,7 +113,7 @@ class Application:
                         except AttributeError as e:
                             print("Impossible de modifier directement:", e)
 
-                    case "9":
+                    case "10":
                         print("Au revoir")
                         break
 
