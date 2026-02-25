@@ -19,9 +19,10 @@ class Application:
             print("5. Retourner un document")
             print("6. Afficher le catalogue")
             print("7. Afficher les membres")
-            print("8. Lister les emprunts d'un membre")
-            print("9. Démonstration verrouillage")
-            print("10. Quitter")
+            print("8. Rechercher un document par titre ou ID")
+            print("9. Lister les emprunts d'un membre")
+            print("10. Démonstration verrouillage")
+            print("11. Quitter")
 
             choix = input("Votre choix : ")
 
@@ -155,6 +156,25 @@ class Application:
                     case "8":
                         try:
                             while True:
+                                titre = input("Titre ou ID du document : ").strip()
+                                if not titre:
+                                    print("Le titre ou ID doit être composé uniquement de lettres ou de chiffres. Veuillez réessayer.")
+                                else:
+                                    break
+
+                            doc = self.bibliothecaire.trouver_document(titre)
+
+                            if doc:
+                                print(doc)
+                            else:
+                                print("Document non trouvé.")
+
+                        except Exception as e:
+                            print("Erreur lors de la recherche du document :", e)
+
+                    case "9":
+                        try:
+                            while True:
                                 nom = input("Nom membre : ").strip().replace(" ", "")
                                 if not nom.isalpha():
                                     print("Le nom du membre doit être composé uniquement de lettres. Veuillez réessayer.")
@@ -168,11 +188,11 @@ class Application:
                             else:
                                 for doc in emprunts:
                                     print(doc)
-                                    
+
                         except Exception as e:
                             print("Erreur :", e)
 
-                    case "9":
+                    case "10":
                         # Démonstration verrouillage
                         livre = Livre("TestVerrou", "AuteurTest")
                         print("Disponible :", livre.disponible)
@@ -182,7 +202,7 @@ class Application:
                         except AttributeError as e:
                             print("Impossible de modifier directement:", e)
 
-                    case "10":
+                    case "11":
                         print("Au revoir")
                         break
 

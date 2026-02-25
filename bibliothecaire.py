@@ -58,7 +58,7 @@ class Bibliothecaire:
         conn = connection_db()
         cursor = conn.cursor(dictionary=True)
 
-        cursor.execute("SELECT * FROM documents WHERE titre=%s", (titre,))
+        cursor.execute("SELECT * FROM documents WHERE titre=%s or id=%s", (titre, titre))
 
         # récupérer données document
         doc = cursor.fetchone()
