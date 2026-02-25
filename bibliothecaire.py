@@ -1,4 +1,3 @@
-from document import Document
 from livre import Livre
 from magazine import Magazine
 from db import connection_db
@@ -6,8 +5,11 @@ from datetime import datetime
 
 
 class Bibliothecaire:
+    """Classe représentant un bibliothécaire qui gère les opérations de la bibliothèque."""
 
     def ajouter_document(self, document):
+        """Ajoute un nouveau document (livre ou magazine) à la bibliothèque."""
+
         conn = connection_db()
         cursor = conn.cursor()
 

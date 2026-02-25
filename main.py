@@ -3,10 +3,13 @@ from livre import Livre
 from magazine import Magazine
 
 class Application:
+    """Classe principale de l'application de gestion de bibliothèque."""
+
     def __init__(self):
         self.bibliothecaire = Bibliothecaire()
 
     def lancer(self):
+        """Lance l'application et affiche le menu principal."""
         while True:
             print("\n===== MENU =====")
             print("1. Ajouter un Livre")
@@ -27,10 +30,25 @@ class Application:
 
                     case "1":
                         try:
-                            titre = input("Titre : ").strip()
-                            auteur = input("Auteur : ").strip()
+                            while True:
+                        
+                                titre = input("Titre : ").strip().replace(" ", "")
+
+                                if not titre.isalpha():
+                                    print("Le titre doit être composé uniquement de lettres. Veuillez réessayer.")
+                                else:
+                                    break
+
+                            while True:
+                                auteur = input("Auteur : ").strip().replace(" ", "")
+
+                                if not auteur.isalpha():
+                                    print("Le nom de l'auteur doit être composé uniquement de lettres. Veuillez réessayer.")
+                                else:
+                                    break
 
                             doc = Livre(titre, auteur)
+
                             self.bibliothecaire.ajouter_document(doc)
                             print("Livre ajouté avec succès.")
 
@@ -39,8 +57,19 @@ class Application:
 
                     case "2":
                         try:
-                            titre = input("Titre : ").strip()
-                            numero = input("Numéro : ").strip()
+                            while True:
+                                titre = input("Titre : ").strip().replace(" ", "")
+                                if not titre.isalpha():
+                                    print("Le titre doit être composé uniquement de lettres. Veuillez réessayer.")
+                                else:
+                                    break
+
+                            while True:
+                                numero = input("Numéro : ").strip().replace(" ", "")
+                                if not numero.isdigit():
+                                    print("Le numéro doit être composé uniquement de chiffres. Veuillez réessayer.")
+                                else:
+                                    break
 
                             doc = Magazine(titre, numero)
                             self.bibliothecaire.ajouter_document(doc)
@@ -51,25 +80,57 @@ class Application:
 
                     case "3":
                         try:
-                            nom = input("Nom du membre : ").strip()
+                            while True:
+                                nom = input("Nom du membre : ").strip().replace(" ", "")
+                                if not nom.isalpha():
+                                    print("Le nom du membre doit être composé uniquement de lettres. Veuillez réessayer.")
+                                else:
+                                    break
+
                             self.bibliothecaire.inscrire_membre(nom)
                             print("Membre inscrit avec succès.")
+
                         except Exception as e:
                             print("Erreur lors de l'inscription du membre :", e)
 
                     case "4":
                         try:
-                            titre = input("Titre : ").strip()
-                            nom = input("Nom membre : ").strip()
+                            while True:
+                                titre = input("Titre du document à emprunter : ").strip().replace(" ", "")
+                                if not titre:
+                                    print("Le titre doit être composé uniquement de lettres. Veuillez réessayer.")
+                                else:
+                                    break
+
+                            while True:
+                                nom = input("Nom membre : ").strip().replace(" ", "")
+                                if not nom.isalpha():
+                                    print("Le nom du membre doit être composé uniquement de lettres. Veuillez réessayer.")
+                                else:
+                                    break
+
                             self.bibliothecaire.emprunter_document(titre, nom)
                             print("Emprunt validé.")
+
                         except Exception as e:
                             print("Erreur lors de l'emprunt :", e)
 
                     case "5":
                         try:
-                            titre = input("Titre : ").strip()
-                            nom = input("Nom membre : ").strip()
+                            while True:
+                                titre = input("Titre du document à retourner : ").strip().replace(" ", "")
+                                if not titre.isalpha():
+                                    print("Le titre doit être composé uniquement de lettres. Veuillez réessayer.")
+                                else:
+                                    break
+
+                            while True:
+                                nom = input("Nom membre : ").strip().replace(" ", "")
+                                if not nom.isalpha():
+                                    print("Le nom du membre doit être composé uniquement de lettres. Veuillez réessayer.")
+                                else:
+                                    break
+
                             self.bibliothecaire.retourner_document(titre, nom)
                             print("Retour validé.")
                         except Exception as e:
@@ -93,13 +154,21 @@ class Application:
 
                     case "8":
                         try:
-                            nom = input("Nom membre : ").strip()
+                            while True:
+                                nom = input("Nom membre : ").strip().replace(" ", "")
+                                if not nom.isalpha():
+                                    print("Le nom du membre doit être composé uniquement de lettres. Veuillez réessayer.")
+                                else:
+                                    break
+
                             emprunts = self.bibliothecaire.afficher_emprunts_membre(nom)
+
                             if not emprunts:
                                 print("Aucun emprunt pour ce membre.")
                             else:
                                 for doc in emprunts:
                                     print(doc)
+                                    
                         except Exception as e:
                             print("Erreur :", e)
 

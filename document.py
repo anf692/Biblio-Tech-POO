@@ -36,3 +36,4 @@ class Document(ABC):
 
     def _changer_disponibilite(self, etat):
         self.__disponible = etat
+
