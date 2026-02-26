@@ -312,6 +312,6 @@ class Bibliothecaire:
         conn.close()
 
         return result
-    
+
 
 
